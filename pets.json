@@ -7,6 +7,13 @@
     "githubUrl": "https://github.com/dushaoshuai/copets/tree/main/programming_languages/go-gopher"
   },
   {
+    "id": "baiyuan-nanshanjing-shanhaijing",
+    "displayName": "山海经 · 卷一 南山经 · 白猿",
+    "description": "白猿，出自《山海经》卷一 南山经：又东三百里，曰堂庭之山，多棪木，多白猿，多水玉，多黄金。往东三百里，叫做堂庭山，山上多生棪木，它的果实像苹果，又多产白猿，多产水晶，多产黄金。",
+    "spritesheetPath": "shanhaijing/nanshanjing/baiyuan-nanshanjing-shanhaijing/spritesheet.webp",
+    "githubUrl": "https://github.com/dushaoshuai/copets/tree/main/shanhaijing/nanshanjing/baiyuan-nanshanjing-shanhaijing"
+  },
+  {
     "id": "lei-nanshanjing-shanhaijing",
     "displayName": "山海经 · 卷一 南山经 · 类",
     "description": "类，出自《山海经》卷一 南山经：有兽焉，其状如狸而有髦，其名曰类，自为牝牡，食者不妒。有一种兽，形状像野猫，长有头发，它的名字叫类，身上具有雌雄两种性器官，可以自行交配，吃了它能够使人不妒嫉。",
