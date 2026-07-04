@@ -67,40 +67,7 @@
       .brand {
         display: flex;
         align-items: center;
-        gap: 14px;
         min-width: 0;
-      }
-
-      .brand-mark {
-        width: 42px;
-        height: 42px;
-        border-radius: 50%;
-        background: #ffffff;
-        box-shadow: 0 1px 0 rgb(0 0 0 / 12%);
-        position: relative;
-        flex: 0 0 auto;
-      }
-
-      .brand-mark::before,
-      .brand-mark::after {
-        content: "";
-        position: absolute;
-        background: var(--go-blue);
-        border-radius: 999px;
-      }
-
-      .brand-mark::before {
-        width: 24px;
-        height: 5px;
-        left: -12px;
-        top: 13px;
-      }
-
-      .brand-mark::after {
-        width: 18px;
-        height: 5px;
-        left: -7px;
-        top: 23px;
       }
 
       h1 {
@@ -159,21 +126,124 @@
       }
 
       .pet-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(max-content, 224px));
+        gap: 14px;
+      }
+
+      .pet-card {
+        display: grid;
+        justify-items: center;
+        gap: 10px;
+        min-height: 180px;
         border: 1px solid var(--line);
         border-radius: 8px;
-        overflow: hidden;
+        padding: 12px;
+        background: var(--row);
+        color: inherit;
+        font: inherit;
+        text-align: center;
+        cursor: pointer;
+        box-shadow: var(--shadow);
+      }
+
+      .pet-card:hover,
+      .pet-card[aria-pressed="true"] {
+        border-color: var(--go-blue-dark);
+      }
+
+      .pet-card:focus-visible {
+        outline: 3px solid rgb(0 173 216 / 35%);
+        outline-offset: 2px;
+      }
+
+      .pet-card-name {
+        margin: 0;
+        color: var(--go-blue-dark);
+        font-size: 1rem;
+        font-weight: 700;
+        line-height: 1.35;
+        letter-spacing: 0;
+        white-space: nowrap;
+      }
+
+      :root[data-theme="dark"] .pet-card-name {
+        color: #6fdcff;
+      }
+
+      .pet-detail {
+        display: grid;
+        gap: 16px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 18px 20px;
         background: var(--row);
         box-shadow: var(--shadow);
       }
 
-      .pet-row {
-        display: grid;
-        gap: 16px;
-        padding: 18px 20px;
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 20;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: rgb(15 23 42 / 52%);
+        backdrop-filter: blur(2px);
       }
 
-      .pet-row + .pet-row {
-        border-top: 1px solid var(--line);
+      .modal-backdrop[data-open="true"] {
+        display: flex;
+      }
+
+      .pet-modal {
+        width: min(980px, 100%);
+        max-height: min(860px, calc(100vh - 48px));
+        overflow: visible;
+        position: relative;
+        filter: drop-shadow(0 28px 45px rgb(0 0 0 / 28%));
+        transform: translateY(-18px);
+      }
+
+      .pet-modal .pet-detail {
+        max-height: min(800px, calc(100vh - 72px));
+        overflow: auto;
+        padding: 24px 24px 22px;
+        border-color: rgb(255 255 255 / 80%);
+        box-shadow:
+          0 24px 70px rgb(0 0 0 / 32%),
+          0 3px 10px rgb(0 0 0 / 18%);
+      }
+
+      .modal-close {
+        position: absolute;
+        top: -15px;
+        right: -15px;
+        z-index: 1;
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        background: var(--row);
+        color: var(--ink);
+        cursor: pointer;
+        box-shadow: 0 8px 24px rgb(0 0 0 / 24%);
+      }
+
+      .modal-close:hover {
+        border-color: var(--go-blue-dark);
+        color: var(--go-blue-dark);
+      }
+
+      .modal-close svg {
+        width: 18px;
+        height: 18px;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
       }
 
       .pet-copy {
@@ -212,6 +282,15 @@
         overflow: hidden;
       }
 
+      .pet-detail .pet-description {
+        display: block;
+        max-width: 84ch;
+        overflow: visible;
+        overflow-wrap: anywhere;
+        white-space: normal;
+        word-break: break-word;
+      }
+
       .install-button {
         display: inline-flex;
         align-items: center;
@@ -245,12 +324,9 @@
 
       .actions {
         display: grid;
-        grid-auto-flow: column;
-        grid-auto-columns: 112px;
+        grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
         gap: 12px;
         align-items: stretch;
-        overflow-x: auto;
-        padding-bottom: 4px;
       }
 
       .action {
@@ -291,8 +367,7 @@
 
       @media (max-width: 900px) {
         .actions {
-          grid-auto-columns: 104px;
-          padding-bottom: 2px;
+          grid-template-columns: repeat(auto-fit, minmax(104px, 1fr));
         }
       }
 
@@ -313,8 +388,26 @@
           padding-top: 16px;
         }
 
-        .pet-row {
+        .pet-list {
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+
+        .pet-card {
+          min-height: 162px;
+          padding: 10px;
+        }
+
+        .pet-card-name {
+          font-size: 0.92rem;
+        }
+
+        .pet-detail {
           padding: 16px 12px;
+        }
+
+        .pet-modal .pet-detail {
+          padding: 18px 12px 14px;
         }
 
         .pet-description {
@@ -331,7 +424,7 @@
         }
 
         .actions {
-          grid-auto-columns: 104px;
+          grid-template-columns: repeat(auto-fit, minmax(104px, 1fr));
         }
 
         .sprite-stage {
@@ -345,7 +438,6 @@
     <header>
       <div class="topbar">
         <div class="brand">
-          <span class="brand-mark" aria-hidden="true"></span>
           <div>
             <h1>Copets</h1>
             <p class="subtitle">Codex pets collection</p>
@@ -358,6 +450,18 @@
     <main>
       <section class="pet-list" aria-label="宠物列表"></section>
     </main>
+
+    <div class="modal-backdrop" data-pet-modal hidden>
+      <section class="pet-modal" role="dialog" aria-modal="true" aria-labelledby="pet-modal-title">
+        <button class="modal-close" type="button" data-modal-close aria-label="关闭宠物详情">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18 6 6 18"></path>
+            <path d="m6 6 12 12"></path>
+          </svg>
+        </button>
+        <div data-modal-content></div>
+      </section>
+    </div>
 
     <script>
       const actions = [
@@ -373,6 +477,9 @@
       ];
 
       const petList = document.querySelector(".pet-list");
+      const petModal = document.querySelector("[data-pet-modal]");
+      const modalContent = document.querySelector("[data-modal-content]");
+      const modalClose = document.querySelector("[data-modal-close]");
       const installIcon = `
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M12 3v12"></path>
@@ -388,14 +495,34 @@
         "\"": "&quot;",
         "'": "&#39;"
       }[character]));
+      let selectedPetId = "";
+      let animationRunId = 0;
 
-      function renderPets(pets) {
-        petList.innerHTML = pets.map((pet) => `
-          <article class="pet-row">
+      function renderPetCard(pet) {
+        const isSelected = pet.id === selectedPetId;
+
+        return `
+          <button class="pet-card" type="button" data-pet-id="${escapeHtml(pet.id)}" aria-pressed="${isSelected}">
+            <span class="pet-card-name">${escapeHtml(pet.displayName)}</span>
+            <span class="sprite-stage" aria-hidden="true">
+              <span
+                class="sprite"
+                data-cycle-actions="true"
+                data-durations="${actions[0].durations.join(",")}"
+                style="--sheet: url('${escapeHtml(pet.spritesheetPath)}'); --row-index: 0;"
+              ></span>
+            </span>
+          </button>
+        `;
+      }
+
+      function renderPetDetail(pet) {
+        return `
+          <article class="pet-detail" id="pet-detail-${escapeHtml(pet.id)}">
             <div class="pet-copy">
               <div class="pet-header">
                 <div class="pet-text">
-                  <h2 class="pet-name">${escapeHtml(pet.displayName)}</h2>
+                  <h2 class="pet-name" id="pet-modal-title">${escapeHtml(pet.displayName)}</h2>
                   <p class="pet-description">${escapeHtml(pet.description)}</p>
                 </div>
                 <a class="install-button" href="${escapeHtml(installLink(pet))}" aria-label="Install ${escapeHtml(pet.displayName)} in Codex">
@@ -421,18 +548,84 @@
               `).join("")}
             </div>
           </article>
-        `).join("");
+        `;
+      }
+
+      function renderPets(pets) {
+        petList.innerHTML = pets.map(renderPetCard).join("");
+
+        petList.querySelectorAll(".pet-card").forEach((card) => {
+          card.addEventListener("click", () => {
+            const pet = pets.find((candidate) => candidate.id === card.dataset.petId);
+            if (pet) {
+              openPetModal(pet);
+            }
+          });
+        });
+      }
+
+      function updateSelectedCard() {
+        petList.querySelectorAll(".pet-card").forEach((card) => {
+          card.setAttribute("aria-pressed", String(card.dataset.petId === selectedPetId));
+        });
+      }
+
+      function openPetModal(pet) {
+        selectedPetId = pet.id;
+        modalContent.innerHTML = renderPetDetail(pet);
+        petModal.hidden = false;
+        petModal.dataset.open = "true";
+        document.body.style.overflow = "hidden";
+        updateSelectedCard();
+        startSpriteAnimations();
+        modalClose.focus();
+      }
+
+      function closePetModal() {
+        if (petModal.hidden) {
+          return;
+        }
+
+        selectedPetId = "";
+        petModal.hidden = true;
+        delete petModal.dataset.open;
+        modalContent.innerHTML = "";
+        document.body.style.overflow = "";
+        updateSelectedCard();
+        startSpriteAnimations();
       }
 
       function startSpriteAnimations() {
+        animationRunId += 1;
+        const currentRunId = animationRunId;
+
         document.querySelectorAll(".sprite").forEach((sprite) => {
-          const durations = sprite.dataset.durations.split(",").map(Number);
+          let actionIndex = 0;
           let frame = 0;
 
           const showNextFrame = () => {
+            if (!sprite.isConnected || currentRunId !== animationRunId) {
+              return;
+            }
+
+            const isCycleSprite = sprite.dataset.cycleActions === "true";
+            const action = isCycleSprite ? actions[actionIndex] : null;
+            const durations = isCycleSprite
+              ? action.durations
+              : sprite.dataset.durations.split(",").map(Number);
+
+            if (isCycleSprite) {
+              sprite.style.setProperty("--row-index", action.row);
+            }
+
             sprite.style.backgroundPositionX = `calc(-1 * var(--frame-w) * ${frame})`;
             const delay = durations[frame];
             frame = (frame + 1) % durations.length;
+
+            if (isCycleSprite && frame === 0) {
+              actionIndex = (actionIndex + 1) % actions.length;
+            }
+
             window.setTimeout(showNextFrame, delay);
           };
 
@@ -494,6 +687,20 @@
           localStorage.setItem("copets-theme", nextTheme);
         } catch (_) {}
         updateThemeToggle();
+      });
+
+      modalClose.addEventListener("click", closePetModal);
+
+      petModal.addEventListener("click", (event) => {
+        if (event.target === petModal) {
+          closePetModal();
+        }
+      });
+
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closePetModal();
+        }
       });
 
       updateThemeToggle();
