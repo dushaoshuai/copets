@@ -1,2 +1,3 @@
 # copets
-A collection of my Codex-powered pets.
+
+A collection of my Codex pets.
