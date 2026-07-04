@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "generate:pets": "node scripts/generate-pets.mjs"
+  }
+}

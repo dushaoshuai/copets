@@ -360,38 +360,6 @@
     </main>
 
     <script>
-      const pets = [
-        {
-          id: "go-gopher",
-          displayName: "Go Gopher",
-          description: "A friendly blue Go gopher mascot inspired by the official Go project mascot. See https://go.dev/blog/gopher for more details.",
-          spritesheetPath: "programming_languages/go-gopher/spritesheet.webp",
-          githubUrl: "https://github.com/dushaoshuai/copets/tree/main/programming_languages/go-gopher"
-        },
-        {
-          id: "lu-nanshanjing-shanhaijing",
-          displayName: "山海经 · 卷一 南山经 · 鯥",
-          description: "鯥，出自《山海经》卷一 南山经：有鱼焉，其状如牛，陵居，蛇尾有翼，其羽在鱿下，其音如留牛，其名日鯥，冬死而夏生，食之无肿疾。有一种鱼，形状像牛，住在山坡上，蛇样的尾巴，生有翅膀，翅膀长在肋下，它的声音像犁牛，它的名字叫鯥，冬天蛰伏，夏天苏醒，吃了它可以不患痛肿病。",
-          spritesheetPath: "shanhaijing/nanshanjing/lu-nanshanjing-shanhaijing/spritesheet.webp",
-          githubUrl: "https://github.com/dushaoshuai/copets/tree/main/shanhaijing/nanshanjing/lu-nanshanjing-shanhaijing"
-        },
-        {
-          id: "lushu-nanshanjing-shanhaijing",
-          displayName: "山海经 · 卷一 南山经 · 鹿蜀",
-          description: "鹿蜀，出自《山海经》卷一 南山经：有兽焉，其状如马而白首，其文如虎而赤尾，其音如谣，其名曰鹿蜀，佩之宜子孙。有一种兽，形状像马，脑袋是白的，身上的斑纹像老虎，红色的尾巴，鸣叫的声音像人歌吟，它的名字叫鹿蜀，佩带它的皮毛可以使子孙繁衍。",
-          spritesheetPath: "shanhaijing/nanshanjing/lushu-nanshanjing-shanhaijing/spritesheet.webp",
-          githubUrl: "https://github.com/dushaoshuai/copets/tree/main/shanhaijing/nanshanjing/lushu-nanshanjing-shanhaijing"
-        },
-        {
-          id: "xingxing-nanshanjing-shanhaijing",
-          displayName: "山海经 · 卷一 南山经 · 狌狌",
-          description: "狌狌，出自《山海经》卷一 南山经：有兽焉，其状如禺而白耳，伏行人走，其名曰狌狌，食之善走。有一种兽，形状像长尾猿，长着一对白耳朵，匍匐着伏行又能像人一样直立起来走路，名字叫狌狌，吃了它可以走得快。",
-          spritesheetPath: "shanhaijing/nanshanjing/xingxing-nanshanjing-shanhaijing/spritesheet.webp",
-          githubUrl: "https://github.com/dushaoshuai/copets/tree/main/shanhaijing/nanshanjing/xingxing-nanshanjing-shanhaijing"
-        }
-      ];
-
-
       const actions = [
         { label: "idle", row: 0, durations: [280, 110, 110, 140, 140, 320] },
         { label: "running-right", row: 1, durations: [120, 120, 120, 120, 120, 120, 120, 220] },
@@ -413,53 +381,74 @@
         </svg>`;
       const installPrompt = (pet) => `Please help me install the Codex pet "${pet.displayName}" from this GitHub folder: ${pet.githubUrl}`;
       const installLink = (pet) => `codex://threads/new?prompt=${encodeURIComponent(installPrompt(pet))}`;
+      const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (character) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "'": "&#39;"
+      }[character]));
 
-      petList.innerHTML = pets.map((pet) => `
-        <article class="pet-row">
-          <div class="pet-copy">
-            <div class="pet-header">
-              <div class="pet-text">
-                <h2 class="pet-name">${pet.displayName}</h2>
-                <p class="pet-description">${pet.description}</p>
-              </div>
-              <a class="install-button" href="${installLink(pet)}" aria-label="Install ${pet.displayName} in Codex">
-                ${installIcon}
-                <span>Install</span>
-              </a>
-            </div>
-          </div>
-          <div class="actions" aria-label="${pet.displayName} 动作">
-            ${actions.map((action) => `
-              <div class="action">
-                <div class="sprite-stage">
-                  <div
-                    class="sprite"
-                    role="img"
-                    aria-label="${pet.displayName} ${action.label}动画"
-                    data-durations="${action.durations.join(",")}"
-                    style="--sheet: url('${pet.spritesheetPath}'); --row-index: ${action.row};"
-                  ></div>
+      function renderPets(pets) {
+        petList.innerHTML = pets.map((pet) => `
+          <article class="pet-row">
+            <div class="pet-copy">
+              <div class="pet-header">
+                <div class="pet-text">
+                  <h2 class="pet-name">${escapeHtml(pet.displayName)}</h2>
+                  <p class="pet-description">${escapeHtml(pet.description)}</p>
                 </div>
-                <span class="action-name">${action.label}</span>
+                <a class="install-button" href="${escapeHtml(installLink(pet))}" aria-label="Install ${escapeHtml(pet.displayName)} in Codex">
+                  ${installIcon}
+                  <span>Install</span>
+                </a>
               </div>
-            `).join("")}
-          </div>
-        </article>
-      `).join("");
+            </div>
+            <div class="actions" aria-label="${escapeHtml(pet.displayName)} 动作">
+              ${actions.map((action) => `
+                <div class="action">
+                  <div class="sprite-stage">
+                    <div
+                      class="sprite"
+                      role="img"
+                      aria-label="${escapeHtml(pet.displayName)} ${escapeHtml(action.label)}动画"
+                      data-durations="${action.durations.join(",")}"
+                      style="--sheet: url('${escapeHtml(pet.spritesheetPath)}'); --row-index: ${action.row};"
+                    ></div>
+                  </div>
+                  <span class="action-name">${escapeHtml(action.label)}</span>
+                </div>
+              `).join("")}
+            </div>
+          </article>
+        `).join("");
+      }
 
-      document.querySelectorAll(".sprite").forEach((sprite) => {
-        const durations = sprite.dataset.durations.split(",").map(Number);
-        let frame = 0;
+      function startSpriteAnimations() {
+        document.querySelectorAll(".sprite").forEach((sprite) => {
+          const durations = sprite.dataset.durations.split(",").map(Number);
+          let frame = 0;
 
-        const showNextFrame = () => {
-          sprite.style.backgroundPositionX = `calc(-1 * var(--frame-w) * ${frame})`;
-          const delay = durations[frame];
-          frame = (frame + 1) % durations.length;
-          window.setTimeout(showNextFrame, delay);
-        };
+          const showNextFrame = () => {
+            sprite.style.backgroundPositionX = `calc(-1 * var(--frame-w) * ${frame})`;
+            const delay = durations[frame];
+            frame = (frame + 1) % durations.length;
+            window.setTimeout(showNextFrame, delay);
+          };
 
-        showNextFrame();
-      });
+          showNextFrame();
+        });
+      }
+
+      async function loadPets() {
+        const response = await fetch("pets.json");
+
+        if (!response.ok) {
+          throw new Error(`Failed to load pets.json: ${response.status}`);
+        }
+
+        return response.json();
+      }
 
       const root = document.documentElement;
       const themeToggle = document.querySelector("[data-theme-toggle]");
@@ -508,6 +497,15 @@
       });
 
       updateThemeToggle();
+
+      loadPets()
+        .then((pets) => {
+          renderPets(pets);
+          startSpriteAnimations();
+        })
+        .catch((error) => {
+          petList.innerHTML = `<p class="pet-description">${escapeHtml(error.message)}</p>`;
+        });
     </script>
   </body>
 </html>
