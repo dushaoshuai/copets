@@ -42,6 +42,13 @@
     "githubUrl": "https://github.com/dushaoshuai/copets/tree/main/shanhaijing/nanshanjing/lushu-nanshanjing-shanhaijing"
   },
   {
+    "id": "qitu-nanshanjing-shanhaijing",
+    "displayName": "山海经 · 卷一 南山经 · 鵸鵌",
+    "description": "鵸鵌，出自《山海经》卷一 南山经：有鸟焉，其状如鸡而三首、六目、六足、三翼，其名曰鵸鵌，食之无卧。又有一种鸟，形状像鸡，却长了三个脑袋，六只眼睛，六条腿，三只翅膀，它的名字叫鵸鵌，吃了它可以使人精神兴奋，睡不着觉。",
+    "spritesheetPath": "shanhaijing/nanshanjing/qitu-nanshanjing-shanhaijing/spritesheet.webp",
+    "githubUrl": "https://github.com/dushaoshuai/copets/tree/main/shanhaijing/nanshanjing/qitu-nanshanjing-shanhaijing"
+  },
+  {
     "id": "xingxing-nanshanjing-shanhaijing",
     "displayName": "山海经 · 卷一 南山经 · 狌狌",
     "description": "狌狌，出自《山海经》卷一 南山经：有兽焉，其状如禺而白耳，伏行人走，其名曰狌狌，食之善走。有一种兽，形状像长尾猿，长着一对白耳朵，匍匐着伏行又能像人一样直立起来走路，名字叫狌狌，吃了它可以走得快。",
