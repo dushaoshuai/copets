@@ -49,6 +49,13 @@
     "githubUrl": "https://github.com/dushaoshuai/copets/tree/main/shanhaijing/nanshanjing/lei-nanshanjing-shanhaijing"
   },
   {
+    "id": "lili-nanshanjing-shanhaijing",
+    "displayName": "山海经 · 卷一 南山经 · 狸力",
+    "description": "狸力，出自《山海经》卷一 南山经：有兽焉，其状如豚，有距，其音如狗吠，其名曰狸力，见则其县多土功。有一种兽，形状像小猪，长着一对鸡足，它的声音像狗叫，它的名字叫狸力，它所出现的那个县，一定会有繁重的水土工程。",
+    "spritesheetPath": "shanhaijing/nanshanjing/lili-nanshanjing-shanhaijing/spritesheet.webp",
+    "githubUrl": "https://github.com/dushaoshuai/copets/tree/main/shanhaijing/nanshanjing/lili-nanshanjing-shanhaijing"
+  },
+  {
     "id": "lu-nanshanjing-shanhaijing",
     "displayName": "山海经 · 卷⼀ 南⼭经 · 鯥",
     "description": "鯥，出自《山海经》卷⼀ 南⼭经：有⻥焉，其状如⽜，陵居，蛇尾有翼，其⽻在鱿下，其⾳如留⽜，其名⽇鯥 ，冬死⽽夏⽣，⻝之⽆肿疾 ｡有⼀种⿂，形状像⽜，住在⼭坡上，蛇样的尾巴，⽣有翅膀，翅膀⻓在肋下，它的声⾳像犁⽜，它的名字叫鯥，冬天蛰伏，夏天苏醒，吃了它可以不患痛肿病 ｡",
