@@ -451,6 +451,9 @@
       }
 
       .pet-category {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
         align-self: flex-start;
         margin-bottom: 9px;
         color: var(--brand-ink);
@@ -458,6 +461,21 @@
         font-weight: 760;
         letter-spacing: 0.08em;
         text-transform: uppercase;
+      }
+
+      .version-badge {
+        display: inline-flex;
+        align-items: center;
+        min-height: 20px;
+        border: 1px solid color-mix(in srgb, var(--brand) 28%, var(--line));
+        border-radius: 999px;
+        padding: 1px 7px 0;
+        background: var(--brand-soft);
+        color: var(--brand-ink);
+        font-size: 0.66rem;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        line-height: 1;
       }
 
       .pet-card-name {
@@ -502,7 +520,7 @@
         height: var(--frame-h);
         background-image: var(--sheet);
         background-repeat: no-repeat;
-        background-size: 768px 936px;
+        background-size: 768px var(--sheet-h);
         background-position-y: calc(-1 * var(--row-index) * var(--frame-h));
         image-rendering: auto;
       }
@@ -950,6 +968,18 @@
         { label: "Review", row: 8, durations: [150, 150, 150, 150, 150, 280] }
       ];
 
+      const v2Actions = [
+        ...actions,
+        {
+          label: "Look around",
+          frames: Array.from({ length: 16 }, (_, index) => ({
+            row: index < 8 ? 9 : 10,
+            column: index % 8
+          })),
+          durations: Array(16).fill(120)
+        }
+      ];
+
       const petList = document.querySelector(".pet-list");
       const petModal = document.querySelector("[data-pet-modal]");
       const modalContent = document.querySelector("[data-modal-content]");
@@ -982,10 +1012,24 @@
         return getCategory(pet) === "programming" ? "Programming language" : "Shanhaijing · Nanshan Jing";
       }
 
+      function getVersion(pet) {
+        return pet.spriteVersionNumber === 2 ? 2 : 1;
+      }
+
+      function getActions(pet) {
+        return getVersion(pet) === 2 ? v2Actions : actions;
+      }
+
+      function renderVersionBadge(pet) {
+        const version = `V${getVersion(pet)}`;
+        return `<span class="version-badge" title="Sprite format ${version}">${version}</span>`;
+      }
+
       function renderSprite(pet, action = actions[0], attributes = "") {
+        const frames = action.frames || action.durations.map((_, column) => ({ row: action.row, column }));
         return `
           <span class="sprite-stage" aria-hidden="true">
-            <span class="sprite" ${attributes} data-durations="${action.durations.join(",")}" style="--sheet: url('${escapeHtml(pet.spritesheetPath)}'); --row-index: ${action.row};"></span>
+            <span class="sprite" ${attributes} data-durations="${action.durations.join(",")}" data-frames="${frames.map(({ row, column }) => `${row}:${column}`).join(",")}" style="--sheet: url('${escapeHtml(pet.spritesheetPath)}'); --sheet-h: ${getVersion(pet) === 2 ? "1144px" : "936px"}; --row-index: ${frames[0].row};"></span>
           </span>`;
       }
 
@@ -994,19 +1038,20 @@
           <button class="pet-card" type="button" data-pet-id="${escapeHtml(pet.id)}" aria-label="View animations and installation details for ${escapeHtml(pet.displayName)}">
             <span class="pet-card-art">${renderSprite(pet)}</span>
             <span class="pet-card-body">
-              <span class="pet-category">${escapeHtml(getCategoryLabel(pet))}</span>
+              <span class="pet-category"><span>${escapeHtml(getCategoryLabel(pet))}</span>${renderVersionBadge(pet)}</span>
               <span class="pet-card-name">${escapeHtml(pet.displayName)}</span>
-              <span class="pet-card-meta"><span>9 animations</span><span class="view-label">View details →</span></span>
+              <span class="pet-card-meta"><span>${getActions(pet).length} states</span><span class="view-label">View details →</span></span>
             </span>
           </button>`;
       }
 
       function renderPetDetail(pet) {
+        const petActions = getActions(pet);
         return `
           <article class="pet-detail">
             <div class="pet-header">
               <div>
-                <p class="pet-kicker">${escapeHtml(getCategoryLabel(pet))}</p>
+                <p class="pet-kicker">${escapeHtml(getCategoryLabel(pet))} · ${renderVersionBadge(pet)}</p>
                 <h2 class="pet-name" id="pet-modal-title">${escapeHtml(pet.displayName)}</h2>
                 <p class="pet-description" id="pet-modal-description">${escapeHtml(pet.description)}</p>
               </div>
@@ -1014,9 +1059,9 @@
                 ${installIcon}<span>Install in Codex</span>
               </a>
             </div>
-            <div class="motion-heading"><h3>Animation preview</h3><span>9 states</span></div>
+            <div class="motion-heading"><h3>Animation preview</h3><span>${petActions.length} states</span></div>
             <div class="actions" aria-label="Animation preview for ${escapeHtml(pet.displayName)}">
-              ${actions.map((action) => `
+              ${petActions.map((action) => `
                 <div class="action">
                   ${renderSprite(pet, action, `role="img" aria-label="${escapeHtml(action.label)} animation"`)}
                   <span class="action-name">${escapeHtml(action.label)}</span>
@@ -1110,9 +1155,15 @@
         document.querySelectorAll(".sprite").forEach((sprite) => {
           let frame = 0;
           const durations = sprite.dataset.durations.split(",").map(Number);
+          const frames = sprite.dataset.frames.split(",").map((value) => {
+            const [row, column] = value.split(":").map(Number);
+            return { row, column };
+          });
           const showNextFrame = () => {
             if (!sprite.isConnected || currentRunId !== animationRunId) return;
-            sprite.style.backgroundPositionX = `calc(-1 * var(--frame-w) * ${frame})`;
+            const currentFrame = frames[frame];
+            sprite.style.backgroundPositionX = `calc(-1 * var(--frame-w) * ${currentFrame.column})`;
+            sprite.style.backgroundPositionY = `calc(-1 * var(--frame-h) * ${currentFrame.row})`;
             if (reduceMotion) return;
             const delay = durations[frame];
             frame = (frame + 1) % durations.length;

@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const outputPath = path.join(repoRoot, "pets.json");
 const ignoredDirectories = new Set([".git", ".idea", ".vscode", "node_modules", "scripts"]);
-const requiredFields = ["id", "displayName", "description", "spritesheetPath"];
+const requiredFields = ["id", "displayName", "description", "spriteVersionNumber", "spritesheetPath"];
 
 async function findPetFiles(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -38,6 +38,10 @@ function validatePet(pet, petFile) {
 
   if (missingFields.length > 0) {
     throw new Error(`${toSitePath(petFile)} is missing required field(s): ${missingFields.join(", ")}`);
+  }
+
+  if (![1, 2].includes(pet.spriteVersionNumber)) {
+    throw new Error(`${toSitePath(petFile)} has invalid spriteVersionNumber; expected 1 or 2`);
   }
 }
 
