@@ -1,385 +1,503 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Copets</title>
+    <meta name="description" content="Explore animated pets for Codex and install your favorite companion in one click.">
+    <meta name="theme-color" content="#f7fbfd">
+    <title>Copets — Animated companions for Codex</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%2300add8'/%3E%3Ccircle cx='24' cy='25' r='6' fill='white'/%3E%3Ccircle cx='40' cy='25' r='6' fill='white'/%3E%3Ccircle cx='24' cy='25' r='2' fill='%23253443'/%3E%3Ccircle cx='40' cy='25' r='2' fill='%23253443'/%3E%3Cellipse cx='32' cy='38' rx='10' ry='7' fill='%23f8d49b'/%3E%3C/svg%3E">
     <style>
       :root {
         color-scheme: light;
-        --go-blue: #00add8;
-        --go-blue-dark: #007d9c;
-        --go-blue-deep: #005f73;
-        --ink: #253443;
-        --muted: #5f6f7a;
-        --line: #dbe7ee;
-        --page: #ffffff;
-        --band: #f6f8fa;
-        --row: #ffffff;
-        --sprite-bg: #eef8fb;
-        --shadow: 0 1px 2px rgb(0 0 0 / 8%);
+        --brand: #0099c2;
+        --brand-strong: #007c9f;
+        --brand-soft: #e8f8fc;
+        --brand-ink: #005c75;
+        --ink: #102a38;
+        --muted: #5d7280;
+        --faint: #8798a2;
+        --page: #f7fbfd;
+        --surface: #ffffff;
+        --surface-soft: #f0f8fb;
+        --line: #d9e7ed;
+        --line-strong: #bdd5df;
+        --overlay: rgb(7 25 34 / 68%);
+        --shadow-sm: 0 1px 2px rgb(20 64 82 / 5%), 0 4px 14px rgb(20 64 82 / 5%);
+        --shadow-md: 0 16px 44px rgb(20 64 82 / 12%);
+        --radius-sm: 10px;
+        --radius-md: 16px;
+        --radius-lg: 24px;
+        --container: 1200px;
       }
 
       :root[data-theme="dark"] {
         color-scheme: dark;
-        --ink: #f5f5f5;
-        --muted: #c7c7c7;
-        --line: #2a2a2a;
-        --page: #000000;
-        --band: #000000;
-        --row: #000000;
-        --sprite-bg: #101010;
-        --shadow: 0 1px 2px rgb(0 0 0 / 40%);
+        --brand: #37c6e9;
+        --brand-strong: #71daf3;
+        --brand-soft: #102f3a;
+        --brand-ink: #8ee4f8;
+        --ink: #edf7fa;
+        --muted: #a8bcc6;
+        --faint: #7f949e;
+        --page: #091116;
+        --surface: #101b21;
+        --surface-soft: #14242c;
+        --line: #263941;
+        --line-strong: #39535e;
+        --overlay: rgb(0 7 10 / 78%);
+        --shadow-sm: 0 1px 2px rgb(0 0 0 / 24%), 0 6px 18px rgb(0 0 0 / 16%);
+        --shadow-md: 0 18px 48px rgb(0 0 0 / 34%);
       }
 
       * {
         box-sizing: border-box;
       }
 
-      body {
-        margin: 0;
-        background: var(--page);
-        color: var(--ink);
-        font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      html {
+        scroll-behavior: smooth;
       }
 
-      header {
-        border-bottom: 1px solid #0086a8;
-        background: var(--go-blue);
-        box-shadow: inset 0 -1px 0 rgb(255 255 255 / 22%);
+      body {
+        margin: 0;
+        overflow-x: hidden;
+        background: var(--page);
+        color: var(--ink);
+        font: 16px/1.6 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+
+      button,
+      a,
+      input,
+      select {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+
+      .skip-link {
+        position: fixed;
+        top: 12px;
+        left: 12px;
+        z-index: 100;
+        transform: translateY(-160%);
+        border-radius: 8px;
+        padding: 8px 12px;
+        background: var(--ink);
+        color: var(--page);
+        text-decoration: none;
+      }
+
+      .skip-link:focus {
+        transform: translateY(0);
+      }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        border-bottom: 1px solid color-mix(in srgb, var(--line) 78%, transparent);
+        background: color-mix(in srgb, var(--page) 88%, transparent);
+        backdrop-filter: blur(18px) saturate(140%);
       }
 
       .topbar,
-      main {
-        width: min(1180px, calc(100% - 32px));
-        margin: 0 auto;
+      main,
+      .footer-inner {
+        width: min(var(--container), calc(100% - 40px));
+        margin-inline: auto;
       }
 
       .topbar {
-        min-height: 76px;
+        min-height: 68px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 20px;
+        gap: 24px;
       }
 
       .brand {
-        display: flex;
+        display: inline-flex;
         align-items: center;
-        min-width: 0;
+        gap: 12px;
+        color: var(--ink);
+        text-decoration: none;
       }
 
-      h1 {
-        margin: 0;
-        color: #ffffff;
-        font-size: clamp(1.8rem, 3vw, 2.7rem);
-        line-height: 1.05;
+      .brand-name {
+        font-size: 1.08rem;
+        font-weight: 780;
+        letter-spacing: -0.025em;
+      }
+
+      .brand-subtitle {
+        color: var(--faint);
+        font-size: 0.7rem;
+        font-weight: 500;
         letter-spacing: 0;
-      }
-
-      .subtitle {
-        margin: 4px 0 0;
-        color: #e8fbff;
-        font-size: 0.98rem;
+        transform: translateY(2px);
       }
 
       .header-actions {
         display: flex;
         align-items: center;
-        gap: 12px;
-        flex: 0 0 auto;
+        gap: 8px;
       }
 
-      .github-link {
+      .header-link,
+      .icon-button {
+        min-height: 40px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-height: 36px;
-        border: 1px solid rgb(255 255 255 / 65%);
-        border-radius: 50%;
-        width: 36px;
-        padding: 0;
-        color: #ffffff;
+        border: 1px solid transparent;
+        border-radius: 10px;
+        color: var(--muted);
         text-decoration: none;
+        transition: 160ms ease;
       }
 
-      .github-link:hover {
-        background: rgb(255 255 255 / 14%);
-      }
-
-      .github-link svg {
-        width: 18px;
-        height: 18px;
-        fill: currentColor;
-      }
-
-      .theme-toggle {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid rgb(255 255 255 / 65%);
-        border-radius: 50%;
-        background: transparent;
-        color: #ffffff;
-        width: 36px;
-        height: 36px;
+      .header-link {
+        width: 40px;
         padding: 0;
+      }
+
+      .icon-button {
+        width: 40px;
+        padding: 0;
+        background: transparent;
         cursor: pointer;
       }
 
-      .theme-toggle[data-target-theme="dark"] {
-        color: #ffffff;
+      .header-link:hover,
+      .icon-button:hover {
+        border-color: var(--line);
+        background: var(--surface);
+        color: var(--ink);
       }
 
-      .theme-toggle[data-target-theme="light"] {
-        color: #ffffff;
-      }
-
-      .theme-toggle:hover {
-        background: rgb(255 255 255 / 14%);
-      }
-
-      .theme-toggle svg {
-        width: 24px;
-        height: 24px;
-        display: block;
+      .header-link svg,
+      .icon-button svg,
+      .install-button svg,
+      .clear-search svg {
+        width: 18px;
+        height: 18px;
+        flex: 0 0 auto;
+        fill: none;
         stroke: currentColor;
         stroke-width: 2;
         stroke-linecap: round;
         stroke-linejoin: round;
+      }
+
+      .search-icon svg {
+        width: 18px;
+        height: 18px;
+        display: block;
         fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
       }
 
       main {
-        padding: 26px 0 44px;
+        padding-block: 30px 86px;
+      }
+
+      .section-heading {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 26px;
+      }
+
+      .section-heading p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .result-count {
+        flex: 0 0 auto;
+        color: var(--faint);
+        font-size: 0.88rem;
+      }
+
+      .toolbar {
+        display: grid;
+        grid-template-columns: minmax(240px, 1fr) auto auto;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 24px;
+      }
+
+      .search-box {
+        position: relative;
+        min-width: 0;
+      }
+
+      .search-icon {
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        color: var(--faint);
+        pointer-events: none;
+        transform: translateY(-50%);
+      }
+
+      .search-box input,
+      .sort-select {
+        width: 100%;
+        min-height: 46px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--surface);
+        color: var(--ink);
+        box-shadow: var(--shadow-sm);
+        outline: none;
+        transition: border-color 160ms ease, box-shadow 160ms ease;
+      }
+
+      .search-box input {
+        padding: 0 46px 0 44px;
+      }
+
+      .search-box input::placeholder {
+        color: var(--faint);
+      }
+
+      .search-box input::-webkit-search-cancel-button {
+        appearance: none;
+        -webkit-appearance: none;
+      }
+
+      .search-box input:focus,
+      .sort-select:focus {
+        border-color: var(--brand);
+        box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand) 16%, transparent);
+      }
+
+      .clear-search {
+        position: absolute;
+        top: 50%;
+        right: 8px;
+        width: 32px;
+        height: 32px;
+        display: none;
+        place-items: center;
+        border: 0;
+        border-radius: 8px;
+        background: transparent;
+        color: var(--faint);
+        cursor: pointer;
+        transform: translateY(-50%);
+      }
+
+      .clear-search[data-visible="true"] {
+        display: grid;
+      }
+
+      .clear-search:hover {
+        background: var(--surface-soft);
+        color: var(--ink);
+      }
+
+      .filter-group {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 4px;
+        background: var(--surface);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .filter-button {
+        min-height: 36px;
+        border: 0;
+        border-radius: 8px;
+        padding: 0 12px;
+        background: transparent;
+        color: var(--muted);
+        font-size: 0.84rem;
+        font-weight: 680;
+        white-space: nowrap;
+        cursor: pointer;
+      }
+
+      .filter-button:hover {
+        color: var(--ink);
+      }
+
+      .filter-button[aria-pressed="true"] {
+        background: var(--brand-soft);
+        color: var(--brand-ink);
+      }
+
+      .sort-control {
+        min-width: 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .sort-label {
+        color: var(--muted);
+        font-size: 0.82rem;
+        font-weight: 650;
+        white-space: nowrap;
+      }
+
+      .sort-select {
+        min-width: 148px;
+        padding: 0 36px 0 12px;
+        color: var(--muted);
+        font-size: 0.84rem;
+        font-weight: 650;
+        cursor: pointer;
       }
 
       .pet-list {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(max-content, 224px));
-        gap: 14px;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
       }
 
       .pet-card {
+        position: relative;
+        min-width: 0;
+        min-height: 310px;
         display: grid;
-        justify-items: center;
-        gap: 10px;
-        min-height: 180px;
+        grid-template-rows: 174px 1fr;
+        overflow: hidden;
         border: 1px solid var(--line);
-        border-radius: 8px;
-        padding: 12px;
-        background: var(--row);
+        border-radius: var(--radius-md);
+        padding: 0;
+        background: var(--surface);
         color: inherit;
-        font: inherit;
-        text-align: center;
+        text-align: left;
         cursor: pointer;
-        box-shadow: var(--shadow);
+        box-shadow: var(--shadow-sm);
+        transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
       }
 
-      .pet-card:hover,
-      .pet-card[aria-pressed="true"] {
-        border-color: var(--go-blue-dark);
+      .pet-card:hover {
+        border-color: var(--line-strong);
+        box-shadow: var(--shadow-md);
+        transform: translateY(-4px);
       }
 
-      .pet-card:focus-visible {
-        outline: 3px solid rgb(0 173 216 / 35%);
-        outline-offset: 2px;
+      .pet-card:focus-visible,
+      .icon-button:focus-visible,
+      .header-link:focus-visible,
+      .primary-link:focus-visible,
+      .secondary-link:focus-visible,
+      .filter-button:focus-visible,
+      .clear-search:focus-visible,
+      .modal-close:focus-visible,
+      .install-button:focus-visible {
+        outline: 3px solid color-mix(in srgb, var(--brand) 38%, transparent);
+        outline-offset: 3px;
+      }
+
+      .pet-card-art {
+        position: relative;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        border-bottom: 1px solid var(--line);
+        background:
+          radial-gradient(circle at 50% 42%, var(--surface) 0 18%, transparent 52%),
+          var(--surface-soft);
+      }
+
+      .pet-card-art::after {
+        content: "";
+        position: absolute;
+        right: 18px;
+        bottom: 18px;
+        left: 18px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgb(31 77 94 / 10%);
+        filter: blur(6px);
+      }
+
+      .pet-card-body {
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        padding: 18px 18px 17px;
+      }
+
+      .pet-category {
+        align-self: flex-start;
+        margin-bottom: 9px;
+        color: var(--brand-ink);
+        font-size: 0.7rem;
+        font-weight: 760;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
       }
 
       .pet-card-name {
         margin: 0;
-        color: var(--go-blue-dark);
-        font-size: 1rem;
-        font-weight: 700;
-        line-height: 1.35;
-        letter-spacing: 0;
-        white-space: nowrap;
-      }
-
-      :root[data-theme="dark"] .pet-card-name {
-        color: #6fdcff;
-      }
-
-      .pet-detail {
-        display: grid;
-        gap: 16px;
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        padding: 18px 20px;
-        background: var(--row);
-        box-shadow: var(--shadow);
-      }
-
-      .modal-backdrop {
-        position: fixed;
-        inset: 0;
-        z-index: 20;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        padding: 24px;
-        background: rgb(15 23 42 / 52%);
-        backdrop-filter: blur(2px);
-      }
-
-      .modal-backdrop[data-open="true"] {
-        display: flex;
-      }
-
-      .pet-modal {
-        width: min(980px, 100%);
-        max-height: min(860px, calc(100vh - 48px));
-        overflow: visible;
-        position: relative;
-        filter: drop-shadow(0 28px 45px rgb(0 0 0 / 28%));
-        transform: translateY(-18px);
-      }
-
-      .pet-modal .pet-detail {
-        max-height: min(800px, calc(100vh - 72px));
-        overflow: auto;
-        padding: 24px 24px 22px;
-        border-color: rgb(255 255 255 / 80%);
-        box-shadow:
-          0 24px 70px rgb(0 0 0 / 32%),
-          0 3px 10px rgb(0 0 0 / 18%);
-      }
-
-      .modal-close {
-        position: absolute;
-        top: -15px;
-        right: -15px;
-        z-index: 1;
-        display: grid;
-        place-items: center;
-        width: 34px;
-        height: 34px;
-        border: 1px solid var(--line);
-        border-radius: 50%;
-        background: var(--row);
         color: var(--ink);
-        cursor: pointer;
-        box-shadow: 0 8px 24px rgb(0 0 0 / 24%);
-      }
-
-      .modal-close:hover {
-        border-color: var(--go-blue-dark);
-        color: var(--go-blue-dark);
-      }
-
-      .modal-close svg {
-        width: 18px;
-        height: 18px;
-        stroke: currentColor;
-        stroke-width: 2;
-        stroke-linecap: round;
-      }
-
-      .pet-copy {
-        min-width: 0;
-      }
-
-      .pet-header {
-        display: flex;
-        align-items: start;
-        justify-content: space-between;
-        gap: 16px;
-      }
-
-      .pet-text {
-        min-width: 0;
-      }
-
-      .pet-name {
-        margin: 0 0 8px;
-        color: var(--go-blue-dark);
-        font-size: 1.22rem;
-        line-height: 1.25;
-        letter-spacing: 0;
-      }
-
-      :root[data-theme="dark"] .pet-name {
-        color: #6fdcff;
-      }
-
-      .pet-description {
-        margin: 0;
-        color: var(--muted);
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-      }
-
-      .pet-detail .pet-description {
-        display: block;
-        max-width: 84ch;
-        overflow: visible;
+        font-size: 0.98rem;
+        font-weight: 760;
+        line-height: 1.35;
+        letter-spacing: -0.02em;
         overflow-wrap: anywhere;
-        white-space: normal;
-        word-break: break-word;
       }
 
-      .install-button {
-        display: inline-flex;
+      .pet-card-meta {
+        display: flex;
         align-items: center;
-        gap: 7px;
-        min-height: 36px;
-        border: 1px solid var(--go-blue-dark);
-        border-radius: 6px;
-        padding: 0 12px;
-        background: var(--go-blue);
-        color: #ffffff;
-        text-decoration: none;
-        font-size: 0.92rem;
-        font-weight: 600;
-        white-space: nowrap;
-        box-shadow: 0 1px 0 rgb(0 0 0 / 8%);
+        justify-content: space-between;
+        gap: 8px;
+        margin-top: auto;
+        padding-top: 16px;
+        color: var(--faint);
+        font-size: 0.76rem;
+        font-weight: 620;
       }
 
-      .install-button:hover {
-        background: var(--go-blue-dark);
-      }
-
-      .install-button svg {
-        width: 16px;
-        height: 16px;
-        stroke: currentColor;
-        stroke-width: 2;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-        fill: none;
-      }
-
-      .actions {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
-        gap: 12px;
-        align-items: stretch;
-      }
-
-      .action {
-        min-width: 0;
-        display: grid;
-        justify-items: center;
-        gap: 6px;
+      .view-label {
+        color: var(--brand-ink);
       }
 
       .sprite-stage {
         width: 112px;
         height: 122px;
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        background: var(--sprite-bg);
         display: grid;
         place-items: center;
-        overflow: hidden;
       }
 
       .sprite {
         --frame-w: 96px;
         --frame-h: 104px;
+        position: relative;
+        z-index: 1;
         width: var(--frame-w);
         height: var(--frame-h);
         background-image: var(--sheet);
@@ -389,117 +507,431 @@
         image-rendering: auto;
       }
 
-      .action-name {
+      .empty-state,
+      .loading-state {
+        grid-column: 1 / -1;
+        min-height: 260px;
+        display: grid;
+        place-items: center;
+        align-content: center;
+        gap: 6px;
+        border: 1px dashed var(--line-strong);
+        border-radius: var(--radius-md);
+        padding: 36px;
         color: var(--muted);
-        font-size: 0.82rem;
-        line-height: 1.2;
+        text-align: center;
       }
 
-      @media (max-width: 900px) {
+      .empty-state strong {
+        color: var(--ink);
+        font-size: 1.05rem;
+      }
+
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 30;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 28px;
+        background: var(--overlay);
+        backdrop-filter: blur(10px);
+      }
+
+      .modal-backdrop[data-open="true"] {
+        display: flex;
+        animation: fade-in 160ms ease both;
+      }
+
+      .pet-modal {
+        position: relative;
+        width: min(1040px, 100%);
+        max-height: calc(100vh - 56px);
+        overflow: auto;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        background: var(--surface);
+        box-shadow: 0 30px 90px rgb(0 0 0 / 32%);
+        animation: modal-in 200ms ease both;
+      }
+
+      .modal-close {
+        position: sticky;
+        top: 16px;
+        z-index: 2;
+        float: right;
+        width: 40px;
+        height: 40px;
+        display: grid;
+        place-items: center;
+        margin: 16px 16px -56px 0;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: color-mix(in srgb, var(--surface) 90%, transparent);
+        color: var(--muted);
+        box-shadow: var(--shadow-sm);
+        cursor: pointer;
+        backdrop-filter: blur(10px);
+      }
+
+      .modal-close:hover {
+        color: var(--ink);
+        border-color: var(--line-strong);
+      }
+
+      .modal-close svg {
+        width: 18px;
+        height: 18px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+      }
+
+      .pet-detail {
+        padding: 42px;
+      }
+
+      .pet-header {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: start;
+        gap: 28px;
+        padding-right: 50px;
+      }
+
+      .pet-kicker {
+        margin: 0 0 8px;
+        color: var(--brand-ink);
+        font-size: 0.72rem;
+        font-weight: 780;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .pet-name {
+        margin: 0;
+        font-size: clamp(1.65rem, 3vw, 2.4rem);
+        line-height: 1.18;
+        letter-spacing: -0.04em;
+      }
+
+      .pet-description {
+        max-width: 76ch;
+        margin: 14px 0 0;
+        color: var(--muted);
+        overflow-wrap: anywhere;
+      }
+
+      .install-button {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border-radius: 11px;
+        padding: 0 16px;
+        background: var(--brand-strong);
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 720;
+        white-space: nowrap;
+        box-shadow: 0 8px 22px rgb(0 126 160 / 18%);
+      }
+
+      .install-button:hover {
+        filter: brightness(0.94);
+      }
+
+      .motion-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin: 36px 0 16px;
+        padding-top: 26px;
+        border-top: 1px solid var(--line);
+      }
+
+      .motion-heading h3 {
+        margin: 0;
+        font-size: 1rem;
+        letter-spacing: -0.015em;
+      }
+
+      .motion-heading span {
+        color: var(--faint);
+        font-size: 0.78rem;
+      }
+
+      .actions {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .action {
+        min-width: 0;
+        display: grid;
+        justify-items: center;
+        gap: 7px;
+        border: 1px solid var(--line);
+        border-radius: 13px;
+        padding: 10px 6px 9px;
+        background: var(--surface-soft);
+      }
+
+      .action-name {
+        color: var(--muted);
+        font-size: 0.73rem;
+        font-weight: 640;
+      }
+
+      .site-footer {
+        border-top: 1px solid var(--line);
+        background: var(--surface);
+      }
+
+      .footer-inner {
+        min-height: 92px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 20px;
+        color: var(--muted);
+        font-size: 0.84rem;
+      }
+
+      .footer-inner a {
+        color: var(--brand-ink);
+        font-weight: 680;
+        text-decoration: none;
+      }
+
+      @keyframes fade-in {
+        from { opacity: 0; }
+      }
+
+      @keyframes modal-in {
+        from { opacity: 0; transform: translateY(12px) scale(0.985); }
+      }
+
+      @media (max-width: 1040px) {
+        .pet-list {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
         .actions {
-          grid-template-columns: repeat(auto-fit, minmax(104px, 1fr));
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 820px) {
+        .toolbar {
+          grid-template-columns: 1fr auto;
+        }
+
+        .search-box {
+          grid-column: 1 / -1;
+        }
+
+        .pet-list {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .pet-detail {
+          padding: 34px 28px;
         }
       }
 
       @media (max-width: 560px) {
+        .topbar,
+        main,
+        .footer-inner {
+          width: calc(100% - 24px);
+          max-width: var(--container);
+        }
+
         .topbar {
-          align-items: flex-start;
-          flex-direction: column;
-          padding: 16px 0;
+          min-height: 60px;
         }
 
-        .theme-toggle {
-          width: 36px;
-          justify-content: center;
-        }
-
-        .header-actions {
-          width: 100%;
-          justify-content: space-between;
+        .brand-subtitle {
+          max-width: 145px;
+          font-size: 0.65rem;
+          line-height: 1.25;
         }
 
         main {
-          width: min(100% - 20px, 1180px);
-          padding-top: 16px;
+          padding-block: 26px 64px;
+        }
+
+        .section-heading {
+          align-items: start;
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .toolbar {
+          grid-template-columns: 1fr;
+        }
+
+        .toolbar > * {
+          min-width: 0;
+        }
+
+        .filter-group {
+          max-width: 100%;
+          overflow-x: auto;
+        }
+
+        .sort-select {
+          flex: 1;
+          min-width: 0;
         }
 
         .pet-list {
           grid-template-columns: 1fr;
-          gap: 10px;
+          gap: 14px;
         }
 
         .pet-card {
-          min-height: 162px;
-          padding: 10px;
+          min-height: 264px;
+          grid-template-rows: 148px 1fr;
         }
 
-        .pet-card-name {
-          font-size: 0.92rem;
+        .pet-card-body {
+          padding: 15px 16px;
+        }
+
+        .modal-backdrop {
+          align-items: flex-end;
+          padding: 0;
+        }
+
+        .pet-modal {
+          width: 100%;
+          max-height: 92vh;
+          border-right: 0;
+          border-bottom: 0;
+          border-left: 0;
+          border-radius: 22px 22px 0 0;
         }
 
         .pet-detail {
-          padding: 16px 12px;
-        }
-
-        .pet-modal .pet-detail {
-          padding: 18px 12px 14px;
-        }
-
-        .pet-description {
-          -webkit-line-clamp: 3;
+          padding: 30px 18px 26px;
         }
 
         .pet-header {
-          flex-direction: column;
-          gap: 12px;
+          grid-template-columns: 1fr;
+          gap: 20px;
+          padding-right: 44px;
         }
 
         .install-button {
-          align-self: flex-start;
+          width: fit-content;
         }
 
         .actions {
-          grid-template-columns: repeat(auto-fit, minmax(104px, 1fr));
+          grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
-        .sprite-stage {
-          width: 104px;
-          height: 114px;
+        .footer-inner {
+          min-height: 112px;
+          align-items: flex-start;
+          justify-content: center;
+          flex-direction: column;
+          gap: 5px;
+          padding-block: 24px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
         }
       }
     </style>
   </head>
   <body>
-    <header>
+    <a class="skip-link" href="#collection">Skip to pet collection</a>
+
+    <header class="site-header" id="top">
       <div class="topbar">
-        <div class="brand">
-          <div>
-            <h1>Copets</h1>
-            <p class="subtitle">Codex pets collection</p>
-          </div>
-        </div>
-        <div class="header-actions">
-          <a class="github-link" href="https://github.com/dushaoshuai/copets" target="_blank" rel="noopener noreferrer" aria-label="打开 GitHub 仓库">
+        <a class="brand" href="#top" aria-label="Copets home">
+          <span class="brand-name">Copets</span>
+          <span class="brand-subtitle">Codex pets</span>
+        </a>
+        <nav class="header-actions" aria-label="Primary navigation">
+          <a class="header-link" href="https://github.com/dushaoshuai/copets" target="_blank" rel="noopener noreferrer" aria-label="View Copets on GitHub" title="GitHub">
             <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.5v-1.9c-2.78.62-3.37-1.22-3.37-1.22-.46-1.19-1.11-1.51-1.11-1.51-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.9 1.57 2.35 1.12 2.92.85.09-.66.35-1.12.63-1.37-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.32 9.32 0 0 1 12 6.95c.85 0 1.7.12 2.5.34 1.9-1.33 2.74-1.05 2.74-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.56 5.06.36.32.68.94.68 1.9v2.83c0 .28.18.6.69.5A10.18 10.18 0 0 0 22 12.26C22 6.58 17.52 2 12 2Z"></path>
+              <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.5v-1.9c-2.78.62-3.37-1.22-3.37-1.22-.46-1.19-1.11-1.51-1.11-1.51-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.9 1.57 2.35 1.12 2.92.85.09-.66.35-1.12.63-1.37-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.32 9.32 0 0 1 12 6.95c.85 0 1.7.12 2.5.34 1.9-1.33 2.74-1.05 2.74-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.56 5.06.36.32.68.94.68 1.9v2.83c0 .28.18.6.69.5A10.18 10.18 0 0 0 22 12.26C22 6.58 17.52 2 12 2Z" fill="currentColor" stroke="none"></path>
             </svg>
           </a>
-          <button class="theme-toggle" type="button" data-theme-toggle aria-label="切换为黑色背景"></button>
-        </div>
+          <button class="icon-button" type="button" data-theme-toggle aria-label="Switch to dark theme"></button>
+        </nav>
       </div>
     </header>
 
-    <main>
-      <section class="pet-list" aria-label="宠物列表"></section>
+    <main id="collection" tabindex="-1">
+      <h1 class="visually-hidden">Copets</h1>
+      <div class="section-heading">
+        <p>Select a pet to preview every animation and install it in Codex.</p>
+        <span class="result-count" data-result-count aria-live="polite">Loading…</span>
+      </div>
+
+      <div class="toolbar" aria-label="Pet filters">
+        <div class="search-box">
+          <label class="visually-hidden" for="pet-search">Search pets</label>
+          <span class="search-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+          </span>
+          <input id="pet-search" type="search" data-search placeholder="Search by name or description…" autocomplete="off">
+          <button class="clear-search" type="button" data-clear-search aria-label="Clear search">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 7 10 10"></path><path d="M17 7 7 17"></path></svg>
+          </button>
+        </div>
+        <div class="filter-group" role="group" aria-label="Filter by collection">
+          <button class="filter-button" type="button" data-filter="all" aria-pressed="true">All</button>
+          <button class="filter-button" type="button" data-filter="programming" aria-pressed="false">Programming</button>
+          <button class="filter-button" type="button" data-filter="shanhaijing" aria-pressed="false">山海经</button>
+        </div>
+        <label class="sort-control">
+          <span class="sort-label">Sort by:</span>
+          <select class="sort-select" data-sort aria-label="Sort pets" aria-describedby="sort-help">
+            <option value="featured">Default order</option>
+            <option value="name">Name</option>
+          </select>
+          <span class="visually-hidden" id="sort-help">Default order follows the curated catalog. Name sorts by the full pet name.</span>
+        </label>
+      </div>
+
+      <section class="pet-list" aria-label="Pet collection" aria-busy="true">
+        <p class="loading-state">Gathering companions…</p>
+      </section>
     </main>
 
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <a href="https://github.com/dushaoshuai/copets" target="_blank" rel="noopener noreferrer">View the project on GitHub</a>
+      </div>
+    </footer>
+
     <div class="modal-backdrop" data-pet-modal hidden>
-      <section class="pet-modal" role="dialog" aria-modal="true" aria-labelledby="pet-modal-title">
-        <button class="modal-close" type="button" data-modal-close aria-label="关闭宠物详情">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M18 6 6 18"></path>
-            <path d="m6 6 12 12"></path>
-          </svg>
+      <section class="pet-modal" role="dialog" aria-modal="true" aria-labelledby="pet-modal-title" aria-describedby="pet-modal-description">
+        <button class="modal-close" type="button" data-modal-close aria-label="Close pet details">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
         </button>
         <div data-modal-content></div>
       </section>
@@ -507,253 +939,249 @@
 
     <script>
       const actions = [
-        { label: "idle", row: 0, durations: [280, 110, 110, 140, 140, 320] },
-        { label: "running-right", row: 1, durations: [120, 120, 120, 120, 120, 120, 120, 220] },
-        { label: "running-left", row: 2, durations: [120, 120, 120, 120, 120, 120, 120, 220] },
-        { label: "waving", row: 3, durations: [140, 140, 140, 280] },
-        { label: "jumping", row: 4, durations: [140, 140, 140, 140, 280] },
-        { label: "failed", row: 5, durations: [140, 140, 140, 140, 140, 140, 140, 240] },
-        { label: "waiting", row: 6, durations: [150, 150, 150, 150, 150, 260] },
-        { label: "running", row: 7, durations: [120, 120, 120, 120, 120, 220] },
-        { label: "review", row: 8, durations: [150, 150, 150, 150, 150, 280] }
+        { label: "Idle", row: 0, durations: [280, 110, 110, 140, 140, 320] },
+        { label: "Run right", row: 1, durations: [120, 120, 120, 120, 120, 120, 120, 220] },
+        { label: "Run left", row: 2, durations: [120, 120, 120, 120, 120, 120, 120, 220] },
+        { label: "Wave", row: 3, durations: [140, 140, 140, 280] },
+        { label: "Jump", row: 4, durations: [140, 140, 140, 140, 280] },
+        { label: "Failed", row: 5, durations: [140, 140, 140, 140, 140, 140, 140, 240] },
+        { label: "Wait", row: 6, durations: [150, 150, 150, 150, 150, 260] },
+        { label: "Run", row: 7, durations: [120, 120, 120, 120, 120, 220] },
+        { label: "Review", row: 8, durations: [150, 150, 150, 150, 150, 280] }
       ];
 
       const petList = document.querySelector(".pet-list");
       const petModal = document.querySelector("[data-pet-modal]");
       const modalContent = document.querySelector("[data-modal-content]");
       const modalClose = document.querySelector("[data-modal-close]");
+      const searchInput = document.querySelector("[data-search]");
+      const clearSearch = document.querySelector("[data-clear-search]");
+      const sortSelect = document.querySelector("[data-sort]");
+      const resultCount = document.querySelector("[data-result-count]");
+      const filterButtons = [...document.querySelectorAll("[data-filter]")];
       const installIcon = `
         <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 3v12"></path>
-          <path d="m7 10 5 5 5-5"></path>
-          <path d="M5 21h14"></path>
+          <path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M5 21h14"></path>
         </svg>`;
       const installPrompt = (pet) => `Please help me install the Codex pet "${pet.displayName}" from this GitHub folder: ${pet.githubUrl}`;
       const installLink = (pet) => `codex://threads/new?prompt=${encodeURIComponent(installPrompt(pet))}`;
       const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (character) => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        "\"": "&quot;",
-        "'": "&#39;"
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;"
       }[character]));
-      let selectedPetId = "";
+
+      let allPets = [];
+      let activeFilter = "all";
       let animationRunId = 0;
+      let lastFocusedElement = null;
+
+      function getCategory(pet) {
+        return pet.spritesheetPath.startsWith("programming_languages/") ? "programming" : "shanhaijing";
+      }
+
+      function getCategoryLabel(pet) {
+        return getCategory(pet) === "programming" ? "Programming language" : "Shanhaijing · Nanshan Jing";
+      }
+
+      function renderSprite(pet, action = actions[0], attributes = "") {
+        return `
+          <span class="sprite-stage" aria-hidden="true">
+            <span class="sprite" ${attributes} data-durations="${action.durations.join(",")}" style="--sheet: url('${escapeHtml(pet.spritesheetPath)}'); --row-index: ${action.row};"></span>
+          </span>`;
+      }
 
       function renderPetCard(pet) {
-        const isSelected = pet.id === selectedPetId;
-
         return `
-          <button class="pet-card" type="button" data-pet-id="${escapeHtml(pet.id)}" aria-pressed="${isSelected}">
-            <span class="pet-card-name">${escapeHtml(pet.displayName)}</span>
-            <span class="sprite-stage" aria-hidden="true">
-              <span
-                class="sprite"
-                data-cycle-actions="true"
-                data-durations="${actions[0].durations.join(",")}"
-                style="--sheet: url('${escapeHtml(pet.spritesheetPath)}'); --row-index: 0;"
-              ></span>
+          <button class="pet-card" type="button" data-pet-id="${escapeHtml(pet.id)}" aria-label="View animations and installation details for ${escapeHtml(pet.displayName)}">
+            <span class="pet-card-art">${renderSprite(pet)}</span>
+            <span class="pet-card-body">
+              <span class="pet-category">${escapeHtml(getCategoryLabel(pet))}</span>
+              <span class="pet-card-name">${escapeHtml(pet.displayName)}</span>
+              <span class="pet-card-meta"><span>9 animations</span><span class="view-label">View details →</span></span>
             </span>
-          </button>
-        `;
+          </button>`;
       }
 
       function renderPetDetail(pet) {
         return `
-          <article class="pet-detail" id="pet-detail-${escapeHtml(pet.id)}">
-            <div class="pet-copy">
-              <div class="pet-header">
-                <div class="pet-text">
-                  <h2 class="pet-name" id="pet-modal-title">${escapeHtml(pet.displayName)}</h2>
-                  <p class="pet-description">${escapeHtml(pet.description)}</p>
-                </div>
-                <a class="install-button" href="${escapeHtml(installLink(pet))}" aria-label="Install ${escapeHtml(pet.displayName)} in Codex">
-                  ${installIcon}
-                  <span>Install</span>
-                </a>
+          <article class="pet-detail">
+            <div class="pet-header">
+              <div>
+                <p class="pet-kicker">${escapeHtml(getCategoryLabel(pet))}</p>
+                <h2 class="pet-name" id="pet-modal-title">${escapeHtml(pet.displayName)}</h2>
+                <p class="pet-description" id="pet-modal-description">${escapeHtml(pet.description)}</p>
               </div>
+              <a class="install-button" href="${escapeHtml(installLink(pet))}" aria-label="Install ${escapeHtml(pet.displayName)} in Codex">
+                ${installIcon}<span>Install in Codex</span>
+              </a>
             </div>
-            <div class="actions" aria-label="${escapeHtml(pet.displayName)} 动作">
+            <div class="motion-heading"><h3>Animation preview</h3><span>9 states</span></div>
+            <div class="actions" aria-label="Animation preview for ${escapeHtml(pet.displayName)}">
               ${actions.map((action) => `
                 <div class="action">
-                  <div class="sprite-stage">
-                    <div
-                      class="sprite"
-                      role="img"
-                      aria-label="${escapeHtml(pet.displayName)} ${escapeHtml(action.label)}动画"
-                      data-durations="${action.durations.join(",")}"
-                      style="--sheet: url('${escapeHtml(pet.spritesheetPath)}'); --row-index: ${action.row};"
-                    ></div>
-                  </div>
+                  ${renderSprite(pet, action, `role="img" aria-label="${escapeHtml(action.label)} animation"`)}
                   <span class="action-name">${escapeHtml(action.label)}</span>
-                </div>
-              `).join("")}
+                </div>`).join("")}
             </div>
-          </article>
-        `;
+          </article>`;
       }
 
-      function renderPets(pets) {
-        petList.innerHTML = pets.map(renderPetCard).join("");
+      function getVisiblePets() {
+        const query = searchInput.value.trim().toLocaleLowerCase();
+        const filtered = allPets.filter((pet) => {
+          const matchesCategory = activeFilter === "all" || getCategory(pet) === activeFilter;
+          const haystack = `${pet.displayName} ${pet.description}`.toLocaleLowerCase();
+          return matchesCategory && (!query || haystack.includes(query));
+        });
 
+        if (sortSelect.value === "name") {
+          return [...filtered].sort((a, b) => a.displayName.localeCompare(b.displayName, ["en", "zh-CN"]));
+        }
+
+        return filtered;
+      }
+
+      function renderPets() {
+        const pets = getVisiblePets();
+        resultCount.textContent = `Showing ${pets.length} of ${allPets.length} pets`;
+        petList.setAttribute("aria-busy", "false");
+        clearSearch.dataset.visible = String(Boolean(searchInput.value));
+
+        if (!pets.length) {
+          petList.innerHTML = `<div class="empty-state"><strong>No matching pets found</strong><span>Try another search or switch collections.</span></div>`;
+          startSpriteAnimations();
+          return;
+        }
+
+        petList.innerHTML = pets.map(renderPetCard).join("");
         petList.querySelectorAll(".pet-card").forEach((card) => {
           card.addEventListener("click", () => {
-            const pet = pets.find((candidate) => candidate.id === card.dataset.petId);
-            if (pet) {
-              openPetModal(pet);
-            }
+            const pet = allPets.find((candidate) => candidate.id === card.dataset.petId);
+            if (pet) openPetModal(pet);
           });
         });
-      }
-
-      function updateSelectedCard() {
-        petList.querySelectorAll(".pet-card").forEach((card) => {
-          card.setAttribute("aria-pressed", String(card.dataset.petId === selectedPetId));
-        });
+        startSpriteAnimations();
       }
 
       function openPetModal(pet) {
-        selectedPetId = pet.id;
+        lastFocusedElement = document.activeElement;
         modalContent.innerHTML = renderPetDetail(pet);
         petModal.hidden = false;
         petModal.dataset.open = "true";
         document.body.style.overflow = "hidden";
-        updateSelectedCard();
         startSpriteAnimations();
         modalClose.focus();
       }
 
       function closePetModal() {
-        if (petModal.hidden) {
-          return;
-        }
-
-        selectedPetId = "";
+        if (petModal.hidden) return;
         petModal.hidden = true;
         delete petModal.dataset.open;
         modalContent.innerHTML = "";
         document.body.style.overflow = "";
-        updateSelectedCard();
         startSpriteAnimations();
+        if (lastFocusedElement?.isConnected) lastFocusedElement.focus();
+      }
+
+      function handleModalKeydown(event) {
+        if (petModal.hidden) return;
+        if (event.key === "Escape") {
+          closePetModal();
+          return;
+        }
+        if (event.key !== "Tab") return;
+        const focusable = [...petModal.querySelectorAll("button, a[href]")].filter((element) => !element.hidden);
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
       }
 
       function startSpriteAnimations() {
         animationRunId += 1;
         const currentRunId = animationRunId;
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
         document.querySelectorAll(".sprite").forEach((sprite) => {
-          let actionIndex = 0;
           let frame = 0;
-
+          const durations = sprite.dataset.durations.split(",").map(Number);
           const showNextFrame = () => {
-            if (!sprite.isConnected || currentRunId !== animationRunId) {
-              return;
-            }
-
-            const isCycleSprite = sprite.dataset.cycleActions === "true";
-            const action = isCycleSprite ? actions[actionIndex] : null;
-            const durations = isCycleSprite
-              ? action.durations
-              : sprite.dataset.durations.split(",").map(Number);
-
-            if (isCycleSprite) {
-              sprite.style.setProperty("--row-index", action.row);
-            }
-
+            if (!sprite.isConnected || currentRunId !== animationRunId) return;
             sprite.style.backgroundPositionX = `calc(-1 * var(--frame-w) * ${frame})`;
+            if (reduceMotion) return;
             const delay = durations[frame];
             frame = (frame + 1) % durations.length;
-
-            if (isCycleSprite && frame === 0) {
-              actionIndex = (actionIndex + 1) % actions.length;
-            }
-
             window.setTimeout(showNextFrame, delay);
           };
-
           showNextFrame();
         });
       }
 
       async function loadPets() {
         const response = await fetch("pets.json");
-
-        if (!response.ok) {
-          throw new Error(`Failed to load pets.json: ${response.status}`);
-        }
-
+        if (!response.ok) throw new Error(`Failed to load pets.json: ${response.status}`);
         return response.json();
       }
 
       const root = document.documentElement;
       const themeToggle = document.querySelector("[data-theme-toggle]");
       const savedTheme = localStorage.getItem("copets-theme");
-      const sunIcon = `
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <circle cx="12" cy="12" r="4"></circle>
-          <path d="M12 2v2"></path>
-          <path d="M12 20v2"></path>
-          <path d="m4.93 4.93 1.41 1.41"></path>
-          <path d="m17.66 17.66 1.41 1.41"></path>
-          <path d="M2 12h2"></path>
-          <path d="M20 12h2"></path>
-          <path d="m6.34 17.66-1.41 1.41"></path>
-          <path d="m19.07 4.93-1.41 1.41"></path>
-        </svg>`;
-      const moonIcon = `
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M20.5 14.4A8 8 0 0 1 9.6 3.5a8.6 8.6 0 1 0 10.9 10.9Z"></path>
-        </svg>`;
+      const sunIcon = `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>`;
+      const moonIcon = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.4A8 8 0 0 1 9.6 3.5a8.6 8.6 0 1 0 10.9 10.9Z"></path></svg>`;
 
-      function updateThemeToggle() {
-        const isDark = root.dataset.theme === "dark";
-        themeToggle.innerHTML = isDark ? moonIcon : sunIcon;
-        themeToggle.setAttribute("aria-label", isDark ? "切换为白色背景" : "切换为黑色背景");
-        themeToggle.setAttribute("title", isDark ? "切换为白色背景" : "切换为黑色背景");
-        themeToggle.dataset.targetTheme = isDark ? "light" : "dark";
-        themeToggle.setAttribute("aria-pressed", String(isDark));
+      function setTheme(theme) {
+        if (theme === "dark") root.dataset.theme = "dark";
+        else delete root.dataset.theme;
+        document.querySelector('meta[name="theme-color"]').content = theme === "dark" ? "#091116" : "#f7fbfd";
+        themeToggle.innerHTML = theme === "dark" ? sunIcon : moonIcon;
+        themeToggle.setAttribute("aria-label", theme === "dark" ? "Switch to light theme" : "Switch to dark theme");
+        themeToggle.setAttribute("title", theme === "dark" ? "Switch to light theme" : "Switch to dark theme");
       }
 
-      if (savedTheme === "dark") {
-        root.dataset.theme = "dark";
-      }
+      const initialTheme = savedTheme === "dark" ? "dark" : "light";
+      setTheme(initialTheme);
 
       themeToggle.addEventListener("click", () => {
         const nextTheme = root.dataset.theme === "dark" ? "light" : "dark";
-        if (nextTheme === "dark") {
-          root.dataset.theme = "dark";
-        } else {
-          delete root.dataset.theme;
-        }
-        try {
-          localStorage.setItem("copets-theme", nextTheme);
-        } catch (_) {}
-        updateThemeToggle();
+        setTheme(nextTheme);
+        try { localStorage.setItem("copets-theme", nextTheme); } catch (_) {}
       });
 
+      filterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          activeFilter = button.dataset.filter;
+          filterButtons.forEach((candidate) => candidate.setAttribute("aria-pressed", String(candidate === button)));
+          renderPets();
+        });
+      });
+
+      searchInput.addEventListener("input", renderPets);
+      sortSelect.addEventListener("change", renderPets);
+      clearSearch.addEventListener("click", () => {
+        searchInput.value = "";
+        searchInput.focus();
+        renderPets();
+      });
       modalClose.addEventListener("click", closePetModal);
-
       petModal.addEventListener("click", (event) => {
-        if (event.target === petModal) {
-          closePetModal();
-        }
+        if (event.target === petModal) closePetModal();
       });
-
-      window.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") {
-          closePetModal();
-        }
-      });
-
-      updateThemeToggle();
+      window.addEventListener("keydown", handleModalKeydown);
 
       loadPets()
         .then((pets) => {
-          renderPets(pets);
-          startSpriteAnimations();
+          allPets = pets;
+          renderPets();
         })
         .catch((error) => {
-          petList.innerHTML = `<p class="pet-description">${escapeHtml(error.message)}</p>`;
+          resultCount.textContent = "Failed to load";
+          petList.setAttribute("aria-busy", "false");
+          petList.innerHTML = `<div class="empty-state"><strong>The pets could not make it</strong><span>${escapeHtml(error.message)}</span></div>`;
         });
     </script>
   </body>
