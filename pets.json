@@ -3,6 +3,7 @@
     "id": "go-gopher",
     "displayName": "Go Gopher",
     "description": "A friendly blue Go gopher mascot inspired by the official Go project mascot. See https://go.dev/blog/gopher for more details.",
+    "spriteVersionNumber": 2,
     "spritesheetPath": "programming_languages/go-gopher/spritesheet.webp",
     "githubUrl": "https://github.com/dushaoshuai/copets/tree/main/programming_languages/go-gopher"
   },
@@ -10,6 +11,7 @@
     "id": "baiyuan-nanshanjing-shanhaijing",
     "displayName": "山海经 · 卷一 南山经 · 白猿",
     "description": "白猿，出自《山海经》卷一 南山经：又东三百里，曰堂庭之山，多棪木，多白猿，多水玉，多黄金。往东三百里，叫做堂庭山，山上多生棪木，它的果实像苹果，又多产白猿，多产水晶，多产黄金。",
+    "spriteVersionNumber": 2,
     "spritesheetPath": "shanhaijing/nanshanjing/baiyuan-nanshanjing-shanhaijing/spritesheet.webp",
     "githubUrl": "https://github.com/dushaoshuai/copets/tree/main/shanhaijing/nanshanjing/baiyuan-nanshanjing-shanhaijing"
   },
@@ -17,6 +19,7 @@
     "id": "chiru-nanshanjing-shanhaijing",
     "displayName": "山海经 · 卷一 南山经 · 赤鱬",
     "description": "赤鱬，出自《山海经》卷一 南山经：其中多赤鱬，其状如鱼而人面，其音如鸳鸯，食之不疥。水中多产人鱼类的赤鱬，形状像鱼而有着一张人样的脸，声音像鸳鸯，吃了它可以不生疥疮。",
+    "spriteVersionNumber": 1,
     "spritesheetPath": "shanhaijing/nanshanjing/chiru-nanshanjing-shanhaijing/spritesheet.webp",
     "githubUrl": "https://github.com/dushaoshuai/copets/tree/main/shanhaijing/nanshanjing/chiru-nanshanjing-shanhaijing"
   },
@@ -24,6 +27,7 @@
     "id": "guanguan-nanshanjing-shanhaijing",
     "displayName": "山海经 · 卷一 南山经 · 灌灌",
     "description": "灌灌，出自《山海经》卷一 南山经：有鸟焉，其状如鸠，其音若呵，名曰灌灌，佩之不惑。又有一种鸟，形状像雄鸠，声音像人们责骂人，它的名字叫灌灌，佩带了它可以使人不迷惑。",
+    "spriteVersionNumber": 1,
     "spritesheetPath": "shanhaijing/nanshanjing/guanguan-nanshanjing-shanhaijing/spritesheet.webp",
     "githubUrl": "https://github.com/dushaoshuai/copets/tree/main/shanhaijing/nanshanjing/guanguan-nanshanjing-shanhaijing"
   },
@@ -31,6 +35,7 @@
     "id": "jiuweihu-nanshanjing-shanhaijing",
     "displayName": "山海经 · 卷一 南山经 · 九尾狐",
     "description": "九尾狐，出自《山海经》卷一 南山经：有兽焉，其状如狐而九尾，其音如婴儿，能食人，食者不蛊。有一种兽，形状像狐狸，却长有九条尾巴，声音好像婴儿啼哭，能够吃人，人若是吃了它就能不逢妖邪之气。",
+    "spriteVersionNumber": 1,
     "spritesheetPath": "shanhaijing/nanshanjing/jiuweihu-nanshanjing-shanhaijing/spritesheet.webp",
     "githubUrl": "https://github.com/dushaoshuai/copets/tree/main/shanhaijing/nanshanjing/jiuweihu-nanshanjing-shanhaijing"
   },
@@ -38,6 +43,7 @@
     "id": "lei-nanshanjing-shanhaijing",
     "displayName": "山海经 · 卷一 南山经 · 类",
     "description": "类，出自《山海经》卷一 南山经：有兽焉，其状如狸而有髦，其名曰类，自为牝牡，食者不妒。有一种兽，形状像野猫，长有头发，它的名字叫类，身上具有雌雄两种性器官，可以自行交配，吃了它能够使人不妒嫉。",
+    "spriteVersionNumber": 2,
     "spritesheetPath": "shanhaijing/nanshanjing/lei-nanshanjing-shanhaijing/spritesheet.webp",
     "githubUrl": "https://github.com/dushaoshuai/copets/tree/main/shanhaijing/nanshanjing/lei-nanshanjing-shanhaijing"
   },
@@ -45,6 +51,7 @@
     "id": "lili-nanshanjing-shanhaijing",
     "displayName": "山海经 · 卷一 南山经 · 狸力",
     "description": "狸力，出自《山海经》卷一 南山经：有兽焉，其状如豚，有距，其音如狗吠，其名曰狸力，见则其县多土功。有一种兽，形状像小猪，长着一对鸡足，它的声音像狗叫，它的名字叫狸力，它所出现的那个县，一定会有繁重的水土工程。",
+    "spriteVersionNumber": 2,
     "spritesheetPath": "shanhaijing/nanshanjing/lili-nanshanjing-shanhaijing/spritesheet.webp",
     "githubUrl": "https://github.com/dushaoshuai/copets/tree/main/shanhaijing/nanshanjing/lili-nanshanjing-shanhaijing"
   },
@@ -52,6 +59,7 @@
     "id": "lu-nanshanjing-shanhaijing",
     "displayName": "山海经 · 卷⼀ 南⼭经 · 鯥",
     "description": "鯥，出自《山海经》卷⼀ 南⼭经：有⻥焉，其状如⽜，陵居，蛇尾有翼，其⽻在鱿下，其⾳如留⽜，其名⽇鯥 ，冬死⽽夏⽣，⻝之⽆肿疾 ｡有⼀种⿂，形状像⽜，住在⼭坡上，蛇样的尾巴，⽣有翅膀，翅膀⻓在肋下，它的声⾳像犁⽜，它的名字叫鯥，冬天蛰伏，夏天苏醒，吃了它可以不患痛肿病 ｡",
+    "spriteVersionNumber": 1,
     "spritesheetPath": "shanhaijing/nanshanjing/lu-nanshanjing-shanhaijing/spritesheet.webp",
     "githubUrl": "https://github.com/dushaoshuai/copets/tree/main/shanhaijing/nanshanjing/lu-nanshanjing-shanhaijing"
   },
@@ -59,6 +67,7 @@
     "id": "lushu-nanshanjing-shanhaijing",
     "displayName": "山海经 · 卷一 南山经 · 鹿蜀",
     "description": "鹿蜀，出自《山海经》卷一 南山经：有兽焉，其状如马而白首，其文如虎而赤尾，其音如谣，其名曰鹿蜀，佩之宜子孙。有一种兽，形状像马，脑袋是白的，身上的斑纹像老虎，红色的尾巴，鸣叫的声音像人歌吟，它的名字叫鹿蜀，佩带它的皮毛可以使子孙繁衍。",
+    "spriteVersionNumber": 2,
     "spritesheetPath": "shanhaijing/nanshanjing/lushu-nanshanjing-shanhaijing/spritesheet.webp",
     "githubUrl": "https://github.com/dushaoshuai/copets/tree/main/shanhaijing/nanshanjing/lushu-nanshanjing-shanhaijing"
   },
@@ -66,6 +75,7 @@
     "id": "qitu-nanshanjing-shanhaijing",
     "displayName": "山海经 · 卷一 南山经 · 鵸鵌",
     "description": "鵸鵌，出自《山海经》卷一 南山经：有鸟焉，其状如鸡而三首、六目、六足、三翼，其名曰鵸鵌，食之无卧。又有一种鸟，形状像鸡，却长了三个脑袋，六只眼睛，六条腿，三只翅膀，它的名字叫鵸鵌，吃了它可以使人精神兴奋，睡不着觉。",
+    "spriteVersionNumber": 1,
     "spritesheetPath": "shanhaijing/nanshanjing/qitu-nanshanjing-shanhaijing/spritesheet.webp",
     "githubUrl": "https://github.com/dushaoshuai/copets/tree/main/shanhaijing/nanshanjing/qitu-nanshanjing-shanhaijing"
   },
@@ -73,6 +83,7 @@
     "id": "xingxing-nanshanjing-shanhaijing",
     "displayName": "山海经 · 卷一 南山经 · 狌狌",
     "description": "狌狌，出自《山海经》卷一 南山经：有兽焉，其状如禺而白耳，伏行人走，其名曰狌狌，食之善走。有一种兽，形状像长尾猿，长着一对白耳朵，匍匐着伏行又能像人一样直立起来走路，名字叫狌狌，吃了它可以走得快。",
+    "spriteVersionNumber": 1,
     "spritesheetPath": "shanhaijing/nanshanjing/xingxing-nanshanjing-shanhaijing/spritesheet.webp",
     "githubUrl": "https://github.com/dushaoshuai/copets/tree/main/shanhaijing/nanshanjing/xingxing-nanshanjing-shanhaijing"
   },
@@ -80,6 +91,7 @@
     "id": "xuangui-nanshanjing-shanhaijing",
     "displayName": "山海经 · 卷一 南山经 · 旋龟",
     "description": "旋龟，出自《山海经》卷一 南山经：其中多玄龟，其状如龟而鸟首虺尾，其名曰旋龟，其音如判木，佩之不聋，可以为底。水中多产黑红色的乌龟，形状像普通乌龟，长的有鸟头和毒蛇样的尖锐的尾巴，它的名字叫旋龟，佩带了它可以使耳朵不聋，还可以医治足底老茧。",
+    "spriteVersionNumber": 1,
     "spritesheetPath": "shanhaijing/nanshanjing/xuangui-nanshanjing-shanhaijing/spritesheet.webp",
     "githubUrl": "https://github.com/dushaoshuai/copets/tree/main/shanhaijing/nanshanjing/xuangui-nanshanjing-shanhaijing"
   }
