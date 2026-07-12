@@ -1,0 +1,15 @@
+{
+  "ok": true,
+  "spriteVersionNumber": 2,
+  "run_dir": "/Users/yskj/dev/github.com/dushaoshuai/copets/.hatch-pet-runs/jiuweihu-nanshanjing-shanhaijing",
+  "spritesheet": "/Users/yskj/dev/github.com/dushaoshuai/copets/.hatch-pet-runs/jiuweihu-nanshanjing-shanhaijing/final/spritesheet-extended.webp",
+  "validation": "/Users/yskj/dev/github.com/dushaoshuai/copets/.hatch-pet-runs/jiuweihu-nanshanjing-shanhaijing/final/validation-extended.json",
+  "chroma_despill": "/Users/yskj/dev/github.com/dushaoshuai/copets/.hatch-pet-runs/jiuweihu-nanshanjing-shanhaijing/qa/chroma-despill-extended.json",
+  "contact_sheet": "/Users/yskj/dev/github.com/dushaoshuai/copets/.hatch-pet-runs/jiuweihu-nanshanjing-shanhaijing/qa/contact-sheet-extended.png",
+  "direction_sheet": "/Users/yskj/dev/github.com/dushaoshuai/copets/.hatch-pet-runs/jiuweihu-nanshanjing-shanhaijing/qa/look-directions.png",
+  "direction_semantics": "/Users/yskj/dev/github.com/dushaoshuai/copets/.hatch-pet-runs/jiuweihu-nanshanjing-shanhaijing/qa/direction-semantics.json",
+  "blind_direction_validation": "/Users/yskj/dev/github.com/dushaoshuai/copets/.hatch-pet-runs/jiuweihu-nanshanjing-shanhaijing/qa/direction-blind-validation.json",
+  "continuity": "/Users/yskj/dev/github.com/dushaoshuai/copets/.hatch-pet-runs/jiuweihu-nanshanjing-shanhaijing/qa/look-continuity.json",
+  "review": "/Users/yskj/dev/github.com/dushaoshuai/copets/.hatch-pet-runs/jiuweihu-nanshanjing-shanhaijing/qa/review.json",
+  "package": "/Users/yskj/dev/github.com/dushaoshuai/copets/shanhaijing/nanshanjing/jiuweihu-nanshanjing-shanhaijing"
+}

@@ -463,21 +463,6 @@
         text-transform: uppercase;
       }
 
-      .version-badge {
-        display: inline-flex;
-        align-items: center;
-        min-height: 20px;
-        border: 1px solid color-mix(in srgb, var(--brand) 28%, var(--line));
-        border-radius: 999px;
-        padding: 1px 7px 0;
-        background: var(--brand-soft);
-        color: var(--brand-ink);
-        font-size: 0.66rem;
-        font-weight: 800;
-        letter-spacing: 0.04em;
-        line-height: 1;
-      }
-
       .pet-card-name {
         margin: 0;
         color: var(--ink);
@@ -965,11 +950,7 @@
         { label: "Failed", row: 5, durations: [140, 140, 140, 140, 140, 140, 140, 240] },
         { label: "Wait", row: 6, durations: [150, 150, 150, 150, 150, 260] },
         { label: "Run", row: 7, durations: [120, 120, 120, 120, 120, 220] },
-        { label: "Review", row: 8, durations: [150, 150, 150, 150, 150, 280] }
-      ];
-
-      const v2Actions = [
-        ...actions,
+        { label: "Review", row: 8, durations: [150, 150, 150, 150, 150, 280] },
         {
           label: "Look around",
           frames: Array.from({ length: 16 }, (_, index) => ({
@@ -1012,24 +993,11 @@
         return getCategory(pet) === "programming" ? "Programming language" : "Shanhaijing · Nanshan Jing";
       }
 
-      function getVersion(pet) {
-        return pet.spriteVersionNumber === 2 ? 2 : 1;
-      }
-
-      function getActions(pet) {
-        return getVersion(pet) === 2 ? v2Actions : actions;
-      }
-
-      function renderVersionBadge(pet) {
-        const version = `V${getVersion(pet)}`;
-        return `<span class="version-badge" title="Sprite format ${version}">${version}</span>`;
-      }
-
       function renderSprite(pet, action = actions[0], attributes = "") {
         const frames = action.frames || action.durations.map((_, column) => ({ row: action.row, column }));
         return `
           <span class="sprite-stage" aria-hidden="true">
-            <span class="sprite" ${attributes} data-durations="${action.durations.join(",")}" data-frames="${frames.map(({ row, column }) => `${row}:${column}`).join(",")}" style="--sheet: url('${escapeHtml(pet.spritesheetPath)}'); --sheet-h: ${getVersion(pet) === 2 ? "1144px" : "936px"}; --row-index: ${frames[0].row};"></span>
+            <span class="sprite" ${attributes} data-durations="${action.durations.join(",")}" data-frames="${frames.map(({ row, column }) => `${row}:${column}`).join(",")}" style="--sheet: url('${escapeHtml(pet.spritesheetPath)}'); --sheet-h: 1144px; --row-index: ${frames[0].row};"></span>
           </span>`;
       }
 
@@ -1038,20 +1006,19 @@
           <button class="pet-card" type="button" data-pet-id="${escapeHtml(pet.id)}" aria-label="View animations and installation details for ${escapeHtml(pet.displayName)}">
             <span class="pet-card-art">${renderSprite(pet)}</span>
             <span class="pet-card-body">
-              <span class="pet-category"><span>${escapeHtml(getCategoryLabel(pet))}</span>${renderVersionBadge(pet)}</span>
+              <span class="pet-category">${escapeHtml(getCategoryLabel(pet))}</span>
               <span class="pet-card-name">${escapeHtml(pet.displayName)}</span>
-              <span class="pet-card-meta"><span>${getActions(pet).length} states</span><span class="view-label">View details →</span></span>
+              <span class="pet-card-meta"><span>${actions.length} states</span><span class="view-label">View details →</span></span>
             </span>
           </button>`;
       }
 
       function renderPetDetail(pet) {
-        const petActions = getActions(pet);
         return `
           <article class="pet-detail">
             <div class="pet-header">
               <div>
-                <p class="pet-kicker">${escapeHtml(getCategoryLabel(pet))} · ${renderVersionBadge(pet)}</p>
+                <p class="pet-kicker">${escapeHtml(getCategoryLabel(pet))}</p>
                 <h2 class="pet-name" id="pet-modal-title">${escapeHtml(pet.displayName)}</h2>
                 <p class="pet-description" id="pet-modal-description">${escapeHtml(pet.description)}</p>
               </div>
@@ -1059,9 +1026,9 @@
                 ${installIcon}<span>Install in Codex</span>
               </a>
             </div>
-            <div class="motion-heading"><h3>Animation preview</h3><span>${petActions.length} states</span></div>
+            <div class="motion-heading"><h3>Animation preview</h3><span>${actions.length} states</span></div>
             <div class="actions" aria-label="Animation preview for ${escapeHtml(pet.displayName)}">
-              ${petActions.map((action) => `
+              ${actions.map((action) => `
                 <div class="action">
                   ${renderSprite(pet, action, `role="img" aria-label="${escapeHtml(action.label)} animation"`)}
                   <span class="action-name">${escapeHtml(action.label)}</span>

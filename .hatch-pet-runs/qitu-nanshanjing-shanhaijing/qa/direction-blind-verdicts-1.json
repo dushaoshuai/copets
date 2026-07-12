@@ -1,0 +1,88 @@
+{
+  "pairs": [
+    {
+      "pair": "horizontal-1",
+      "A": "screen-right",
+      "B": "screen-left",
+      "reason": "isolated blind visual classification"
+    },
+    {
+      "pair": "horizontal-2",
+      "A": "screen-right",
+      "B": "screen-left",
+      "reason": "isolated blind visual classification"
+    },
+    {
+      "pair": "horizontal-3",
+      "A": "screen-right",
+      "B": "screen-left",
+      "reason": "isolated blind visual classification"
+    },
+    {
+      "pair": "horizontal-4",
+      "A": "ambiguous",
+      "B": "ambiguous",
+      "reason": "isolated blind visual classification"
+    },
+    {
+      "pair": "horizontal-5",
+      "A": "screen-left",
+      "B": "screen-right",
+      "reason": "isolated blind visual classification"
+    },
+    {
+      "pair": "horizontal-6",
+      "A": "ambiguous",
+      "B": "screen-left",
+      "reason": "isolated blind visual classification"
+    },
+    {
+      "pair": "horizontal-7",
+      "A": "screen-left",
+      "B": "screen-right",
+      "reason": "isolated blind visual classification"
+    },
+    {
+      "pair": "vertical-1",
+      "A": "up",
+      "B": "down",
+      "reason": "isolated blind visual classification"
+    },
+    {
+      "pair": "vertical-2",
+      "A": "up",
+      "B": "down",
+      "reason": "isolated blind visual classification"
+    },
+    {
+      "pair": "vertical-3",
+      "A": "up",
+      "B": "down",
+      "reason": "isolated blind visual classification"
+    },
+    {
+      "pair": "vertical-4",
+      "A": "ambiguous",
+      "B": "up",
+      "reason": "isolated blind visual classification"
+    },
+    {
+      "pair": "vertical-5",
+      "A": "up",
+      "B": "ambiguous",
+      "reason": "isolated blind visual classification"
+    },
+    {
+      "pair": "vertical-6",
+      "A": "down",
+      "B": "up",
+      "reason": "isolated blind visual classification"
+    },
+    {
+      "pair": "vertical-7",
+      "A": "ambiguous",
+      "B": "ambiguous",
+      "reason": "isolated blind visual classification"
+    }
+  ]
+}

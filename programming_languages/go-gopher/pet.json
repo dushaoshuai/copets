@@ -2,6 +2,5 @@
   "id": "go-gopher",
   "displayName": "Go Gopher",
   "description": "A friendly blue Go gopher mascot inspired by the official Go project mascot. See https://go.dev/blog/gopher for more details.",
-  "spriteVersionNumber": 2,
   "spritesheetPath": "spritesheet.webp"
 }
