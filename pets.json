@@ -94,5 +94,13 @@
     "spriteVersionNumber": 2,
     "spritesheetPath": "shanhaijing/nanshanjing/xuangui-nanshanjing-shanhaijing/spritesheet.webp",
     "githubUrl": "https://github.com/dushaoshuai/copets/tree/main/shanhaijing/nanshanjing/xuangui-nanshanjing-shanhaijing"
+  },
+  {
+    "id": "zhu-nanshanjing-shanhaijing",
+    "displayName": "山海经 · 卷一 南山经 · 鴸",
+    "description": "鴸，出自《山海经》卷一 南山经：有鸟焉，其状如鸱而人手，其音如痹，其名曰鴸，其名自号也，见则其县多放士。有一种鸟，形状像鹞鹰，足像人的手，声音像雌鹤鸣，它的名字叫鴸，它的名字就是从鸣叫声中自己呼唤出来的，它出现的那个县，一定会多有才智之士被放逐。",
+    "spriteVersionNumber": 2,
+    "spritesheetPath": "shanhaijing/nanshanjing/zhu-nanshanjing-shanhaijing/spritesheet.webp",
+    "githubUrl": "https://github.com/dushaoshuai/copets/tree/main/shanhaijing/nanshanjing/zhu-nanshanjing-shanhaijing"
   }
 ]
