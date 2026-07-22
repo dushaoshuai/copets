@@ -8,6 +8,14 @@
     "githubUrl": "https://github.com/dushaoshuai/copets/tree/main/programming_languages/go-gopher"
   },
   {
+    "id": "signal-walker",
+    "displayName": "人行信号灯 · Signal Walker",
+    "description": "由红黄绿 LED 灯珠构成的人行信号灯精灵：绿灯行动，红灯停止，黄灯等待。",
+    "spriteVersionNumber": 2,
+    "spritesheetPath": "public-signals/signal-walker/spritesheet.webp",
+    "githubUrl": "https://github.com/dushaoshuai/copets/tree/main/public-signals/signal-walker"
+  },
+  {
     "id": "baiyuan-nanshanjing-shanhaijing",
     "displayName": "山海经 · 卷一 南山经 · 白猿",
     "description": "白猿，出自《山海经》卷一 南山经：又东三百里，曰堂庭之山，多棪木，多白猿，多水玉，多黄金。往东三百里，叫做堂庭山，山上多生棪木，它的果实像苹果，又多产白猿，多产水晶，多产黄金。",

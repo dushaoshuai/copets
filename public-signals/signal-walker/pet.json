@@ -1,0 +1,7 @@
+{
+  "id": "signal-walker",
+  "displayName": "人行信号灯 · Signal Walker",
+  "description": "由红黄绿 LED 灯珠构成的人行信号灯精灵：绿灯行动，红灯停止，黄灯等待。",
+  "spriteVersionNumber": 2,
+  "spritesheetPath": "spritesheet.webp"
+}
